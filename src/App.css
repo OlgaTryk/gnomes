@@ -1,0 +1,58 @@
+.App {
+  text-align: center;
+}
+
+.Login {
+  display: flex;
+  height: 100vh;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.HomeTitle {
+  font-size: xx-large;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.showUserInfo{
+  display: flex;
+  float: right;
+  z-index: 10000;
+}
+
+.userIcon{
+  color: black;
+}
+
+.Home{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+label,input{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.leaflet-container{
+  height: 100vh;
+  width: 100vw;
+}
+
+.SignUp{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
