@@ -20,11 +20,13 @@
 .showUserInfo{
   display: flex;
   float: right;
+  font-size: 30px;
   z-index: 10000;
 }
 
 .userIcon{
   color: black;
+  font-size: 30px;
 }
 
 .Home{
