@@ -1,3 +1,4 @@
+//main view for logged in users, contains a map and a button to the user info page
 import React, {useEffect} from "react";
 import {MapContainer, TileLayer, useMap} from "react-leaflet"
 import {useNavigate} from "react-router-dom";
@@ -5,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Recenter = () => {
+    //centers map on current location on refresh
     const map = useMap();
     useEffect(() => {
         map.locate().on("locationfound", function (e) {

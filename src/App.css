@@ -2,12 +2,22 @@
   text-align: center;
 }
 
-.Login {
+.Basic {
   display: flex;
+  flex-direction: column;
   height: 100vh;
   width: auto;
   justify-content: center;
   align-items: center;
+}
+
+.UserInfo {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: auto;
+  justify-content: center;
+  align-items: flex-start;
 }
 
 .HomeTitle {
@@ -29,14 +39,6 @@
   font-size: 30px;
 }
 
-.Home{
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: auto;
-  justify-content: center;
-  align-items: center;
-}
 
 label,input{
   display: flex;
@@ -47,14 +49,5 @@ label,input{
 .leaflet-container{
   height: 100vh;
   width: 100vw;
-}
-
-.SignUp{
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-  width: auto;
-  justify-content: center;
-  align-items: center;
 }
 

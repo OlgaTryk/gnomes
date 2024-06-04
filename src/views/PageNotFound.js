@@ -1,3 +1,4 @@
+//404 page, contains link back to the home page
 import React from 'react';
 import {Link} from "react-router-dom";
 

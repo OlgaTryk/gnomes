@@ -1,24 +1,27 @@
 import React from "react";
 import "./App.css"
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Login from "./views/Login"
 import Home from "./views/Home"
 import SignUp from "./views/SignUp";
 import Map from "./views/Map";
 import PageNotFound from "./views/PageNotFound";
 import UserInfo from "./views/UserInfo"
+import {AUTH_KEY} from "./constants"
 
 function App() {
-    //TODO: require login for accessing some pages (once that's implemented)
+
   return (
+    //some pages are available only to logged in users
+    //other users are redirected back to the main page
       <div className="App">
           <Router>
               <Routes>
                   <Route path="/" element={<Home />} />
                   <Route path="/login" element={<Login />} />
                   <Route path="/signup" element={<SignUp />} />
-                  <Route path="/map" element={<Map />} />
-                  <Route path="/userinfo" element={<UserInfo/>}/>
+                  <Route path="/map" element={localStorage.getItem(AUTH_KEY) === "true" ? <Map/> : <Navigate to="/"/>}/>
+                  <Route path="/userinfo" element={localStorage.getItem(AUTH_KEY) === "true" ? <UserInfo/> : <Navigate to="/"/>}/>
                   <Route path="*" element={<PageNotFound />} />
               </Routes>
           </Router>
