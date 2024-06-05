@@ -164,8 +164,9 @@ if __name__ == '__main__':
     # ----- TESTS -----
 
     # add_user("art", "something@gmal.com", "thisispassword")
-    # add_gnome("Papa Krasnal", "Najstarszy w mieście", "Świdnicka", "papa.png")
-    # add_gnome("Życzliwek", "Jeden z najsłynniejszych we Wrocławiu", "Rynek Ratusz 7/9", "zyczliwek.png")
+    add_gnome("Papa Krasnal", "Najstarszy w mieście", "51.107175, 17.031997|Świdnicka", "papa.png")
+    add_gnome("Grajek", "Utalentowany wirtuoz gitary", "51.108622, 17.035058|Oławska 11", "grajek.png")
+    add_gnome("Życzliwek", "Jeden z najsłynniejszych we Wrocławiu", "51.110578, 17.031292|Rynek Ratusz 7/9", "zyczliwek.png")
     # add_gnome("Syzyfki", "Od lat pchają tę samą kulę, niczym Syzyf", "Świdnicka 1", "syzyfki.png")
     # add_gnome("Rzeźnik", "Krasnoludzki sprzedawca wędlin", "Jatki 11", "rzeznik.png")
     # add_gnome("Pracz Odrzański", "Nieprzerwanie myje w Odrze ubrania", "Katedralna przy moście Piaskowym", "pracz.png")
@@ -178,7 +179,6 @@ if __name__ == '__main__':
     # modify_gnome(1, "Papa Krasnal", "Najstarszy w mieście", "Świdnicka", "papa.png")
     # modify_gnome(11, "Test2", "Test API 2", "Jakiś adres 2", "test2.png")
     # delete_gnome(11)
-    # add_gnome("Grajek", "Utalentowany wirtuoz gitary", "Oławska 11", "grajek.png")
     # add_gnome("Meloman", "Znawca dobrej muzyki", "Oławska 11", "meloman.png")
     # add_gnome("Krasnale wodne: Puszczający Stateczki", "Robienie papierowych statków to dla niego chleb powszedni", "pl. Teatralny 4", "kwstateczki.png")
     # add_gnome("Krasnale wodne: Karmiący Ptaki", "Dzięki niemu żaden ptaszek nie zazna głodu", "pl. Teatralny 4", "kwptaki.png")
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     # add_achievement("Bogate marzenia", "Odnajdź Ekonoma")
     # add_achievement("Honor najważniejszą z cnót", "Odnajdź Ołbiniusza")
     # add_achievement("Wśród zieleni", "Odnajdź conajmniej jednego krasnala botanicznego")
-    modify_achievement(44, "Wśród zieleni", "Odnajdź co najmniej jednego krasnala botanicznego")
+    # modify_achievement(44, "Wśród zieleni", "Odnajdź co najmniej jednego krasnala botanicznego")
 
     # unlock_achievement(1, 1)
     # unlock_achievement(2, 1)
