@@ -1,7 +1,7 @@
 //login page, verifies user credentials
 
 import { React, Component} from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Link } from "react-router-dom";
 import { AUTH_KEY, USER_ID } from "../constants";
 import bdcrypt from "bcryptjs"
 
@@ -31,7 +31,7 @@ class Login extends Component{
                 }
                 ).then((response) => {
                     if(!response.ok){
-                        //error if response is not 2xx
+                        //error if response status is not 2xx
                         throw Error("Fetch failed")
                     }
                     return response.json()
@@ -41,7 +41,7 @@ class Login extends Component{
                         if(match){
                             //valid password, user is now logged in
                             localStorage.setItem(AUTH_KEY, true);
-                            localStorage.setItem(USER_ID, responseData.user.id)
+                            localStorage.setItem(USER_ID, responseData.user.id);
                             this.setState({flag: 3})
                         }
                         else{
@@ -57,32 +57,28 @@ class Login extends Component{
     }
 
     render(){
-        if(this.state.flag === 3){
-            //after user logs in redirect to map view
-            return <Navigate to="/map" />
-        }
-        else{
-            return (
-                <div className="Basic">
-                    <form method="post" onSubmit={this.handleSubmit}>
+        return (
+            <div className="Basic">
+                <Link to="/"> Strona główna</Link>
+                { this.state.flag === 3 && <Navigate to="/map" />}
+                <form method="post" onSubmit={this.handleSubmit}>
+                    <label>
+                        Login: <input name="username"/>
+                    </label>
+                    <p>
                         <label>
-                            Login: <input name="username"/>
+                            Password: <input type="password" name="password"/>
                         </label>
-                        <p>
-                            <label>
-                                Password: <input type="password" name="password"/>
-                            </label>
-                        </p>
-                        <p>
-                            <button type="submit">Zaloguj</button>
-                        </p>
-                    </form>
-                    { this.state.flag === 1 && <p> Próba logowania nie powiodła się. </p>}
-                    { this.state.flag === 2 && <p> Podane hasło jest nieprawidłowe. </p>}
-                    { this.state.flag === 4 && <p> Nie podano wszystkich wymaganych danych. </p>}
-                </div>
-            );
-        }
+                    </p>
+                    <p>
+                        <button type="submit">Zaloguj</button>
+                    </p>
+                </form>
+                { this.state.flag === 1 && <p> Próba logowania nie powiodła się. </p>}
+                { this.state.flag === 2 && <p> Podane hasło jest nieprawidłowe. </p>}
+                { this.state.flag === 4 && <p> Nie podano wszystkich wymaganych danych. </p>}
+            </div>
+        );
     }    
 }
 

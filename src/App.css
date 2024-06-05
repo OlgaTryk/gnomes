@@ -20,6 +20,16 @@
   align-items: flex-start;
 }
 
+
+.Gnome{
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: auto;
+  justify-content: center;
+  align-items: center;
+}
+
 .HomeTitle {
   font-size: xx-large;
   display: flex;

@@ -1,9 +1,16 @@
 //show user info: username, email, visited gnomes, and unlocked achievements
 import { React, useEffect, useState } from "react";
-import { USER_ID } from "../constants";
+import { AUTH_KEY, GNOME_ID, USER_ID } from "../constants";
+import { useNavigate } from "react-router-dom";
+
+function onSeeMore(id, navigate){
+    localStorage.setItem(GNOME_ID, id);
+    navigate("/gnome")
+}
 
 function UserInfo(){
-    const[success, setSuccess] = useState(false); //true if all the info was successfully loaded
+    let navigate = useNavigate();
+    const[success, setSuccess] = useState(0); //0 - not loaded, 1 - load successfull, 2 - load failed
     const[username, setUsername] = useState("");
     const[email, setEmail] = useState("");
     const[gnomes, setGnomes] = useState([]);
@@ -20,7 +27,7 @@ function UserInfo(){
             }
             ).then(response => {
                 if(response.ok){
-                    setSuccess(true);
+                    setSuccess(1);
                 }
                 else{
                     throw Error("Fetch failed");
@@ -30,7 +37,7 @@ function UserInfo(){
                 setUsername(responseData.user.username);
                 setEmail(responseData.user.email);
             }).catch(error => {
-                setSuccess(false);
+                setSuccess(2);
             })
         }
         fetchData();
@@ -45,7 +52,7 @@ function UserInfo(){
             }
             ).then(response => {
                 if(response.ok){
-                    setSuccess(true);
+                    setSuccess(1);
                 }
                 else{
                     throw Error("Fetch failed");
@@ -54,7 +61,7 @@ function UserInfo(){
             }).then(responseData => {
                 setGnomes(responseData.gnomes);
             }).catch(error => {
-                setSuccess(false);
+                setSuccess(2);
             })
         }
         fetchGnomes();
@@ -69,7 +76,7 @@ function UserInfo(){
             }
             ).then(response => {
                 if(response.ok){
-                    setSuccess(true);
+                    setSuccess(1);
                 }
                 else{
                     throw Error("Fetch failed");
@@ -78,7 +85,7 @@ function UserInfo(){
             }).then(responseData => {
                 setAchievements(responseData.achievements);
             }).catch(error => {
-                setSuccess(false);
+                setSuccess(2);
             })
         }
         fetchAchievements();
@@ -86,9 +93,9 @@ function UserInfo(){
     //lists are only rendered if they are not empty
     return(
     <div className="Basic">
-        {!success && <p> Błąd ładowania danych. Spróbuj ponownie</p>}
+        {success === 2 && <p> Błąd ładowania danych. Spróbuj ponownie</p>}
         {
-            success &&
+            success === 1 &&
             <div className="UserInfo">
             <p> Nazwa użytkownika: {username} </p>
             <p> Adres email: {email} </p>
@@ -100,8 +107,9 @@ function UserInfo(){
                     return (
                         <div key={key}>
                             {
-                                data.id + ". " + data.name
+                                data.id + ". " + data.name + " "
                             }
+                            <button onClick={() => onSeeMore(data.id, navigate)}> Zobacz szczegóły </button>
                         </div>
                     )
                 })}
@@ -124,6 +132,13 @@ function UserInfo(){
             }
             </div>
         } 
+        { success !== 0 && 
+            <button onClick={() => {
+            localStorage.setItem(AUTH_KEY, false);
+            localStorage.setItem(USER_ID, 0);
+            navigate("/");
+        }}> Wyloguj </button>}
+        
     </div>
     );
 }
