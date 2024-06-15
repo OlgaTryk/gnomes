@@ -1,5 +1,5 @@
 import React from "react";
-import "./App.css"
+import "./App.css";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Gnome from "./views/Gnome";
 import Home from "./views/Home";
@@ -8,7 +8,7 @@ import Map from "./views/Map";
 import PageNotFound from "./views/PageNotFound";
 import SignUp from "./views/SignUp";
 import UserInfo from "./views/UserInfo";
-import {AUTH_KEY} from "./constants"
+import {AUTH_KEY} from "./constants";
 
 function App() {
   return (

@@ -105,7 +105,7 @@ function UserInfo(){
                 <p> Odwiedzone krasnale:</p>
                 {gnomes.map((data, key) => {
                     return (
-                        <div key={key}>
+                        <div className="List" key={key}>
                             {
                                 data.id + ". " + data.name + " "
                             }
@@ -121,7 +121,7 @@ function UserInfo(){
                 <p> Odblokowane osiągnięcia:</p>
                 {achievements.map((data, key) => {
                     return (
-                        <div key={key}>
+                        <div className="List" key={key}>
                             {
                                 data.name + ": " + data.condition
                             }

@@ -5,7 +5,7 @@ from bd import Base, User, Gnome, Achievement, init_db, get_session
 
 
 def create_app():
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder="../build", static_url_path="/")
 
     DATABASE_URI = 'sqlite:///gnome.db'
     engine = create_engine(DATABASE_URI, echo=True)
@@ -24,8 +24,8 @@ def create_app():
             session.close()
 
     @app.route('/')
-    def hello_world():
-        return 'Hello World!'
+    def route_home():
+        return app.send_static_file('index.html')
 
     # ----- USER API -----
 
@@ -258,7 +258,7 @@ def create_app():
         user = session.query(User).get(user_id)
         gnome = session.query(Gnome).get(gnome_id)
         if user:
-            if gnome:
+            if gnome in user.gnomes:
                 visited_gnome_info = [{"id": gnome.ID,
                                     "name": gnome.Name,
                                     "description": gnome.Description,
@@ -267,9 +267,9 @@ def create_app():
                                     "visited_by": [user.ID for user in gnome.users]}]
                 return jsonify({"gnome": visited_gnome_info}), 200
             else:
-                return jsonify({"message" f"Gnome with ID {gnome_id} not found in user's visited gnomes"}), 404
+                return jsonify({"message": f"Gnome with ID {gnome_id} not found in user's visited gnomes"}), 404
         else:
-            return jsonify({"message" f"User with ID {user_id} not found"}), 404
+            return jsonify({"message": f"User with ID {user_id} not found"}), 404
 
 
 # ----- ACHIEVEMENT API -----
@@ -380,16 +380,16 @@ def create_app():
         user = session.query(User).get(user_id)
         achievement = session.query(Achievement).get(achievement_id)
         if user:
-            if achievement:
+            if achievement in user.achievements:
                 achievement_info = [{"id": achievement.ID,
                                     "name": achievement.Name,
                                     "condition": achievement.Condition,
                                     "unlocked_by": [user.ID for user in achievement.users]}]
                 return jsonify({"achievement": achievement_info}), 200
             else:
-                return jsonify({"message" f"Achievement with ID {achievement_id} not found in user's visited gnomes"}), 404
+                return jsonify({"message": f"Achievement with ID {achievement_id} not found in user's visited gnomes"}), 404
         else:
-            return jsonify({"message" f"User with ID {user_id} not found"}), 404
+            return jsonify({"message": f"User with ID {user_id} not found"}), 404
 
 
     return app

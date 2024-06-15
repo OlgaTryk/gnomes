@@ -4,15 +4,63 @@ import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { GNOME_ID, USER_ID } from "../constants";
 
+function visit(){
+    //get visited gnome data
+    const gnome_id = localStorage.getItem(GNOME_ID);
+    const user_id = localStorage.getItem(USER_ID);
+    const visitGnome = async() => {
+        await fetch(`/users/${user_id}/gnomes/${gnome_id}`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then(response => {
+            if(!response.ok){
+                throw Error();
+            }
+            return response.json();
+        }).catch(error => {
+            console.log(error)
+        });
+    }
+    visitGnome();
+}
+
 function Gnome(){
+    let[visited, setVisited] = useState(false);
     let[success, setSuccess] = useState(0); // 0 - not loaded, 1 - load successfull, 2 - load failed
     let[name, setName] = useState("");
     let[location, setLocation] = useState("");
     let[description, setDescription] = useState("Opis można przeczytać po odwiedzeniu krasnala.");
     let[image, setImage] = useState("placeholder.png");
     useEffect(() => {
-        let visited = false;
-        //check if the user visited the gnome, get visited gnome data
+        //check if the user visited the gnome
+        const gnome_id = localStorage.getItem(GNOME_ID);
+        const user_id = localStorage.getItem(USER_ID);
+        const fetchVisitTest = async() => {
+            await fetch(`/users/${user_id}/gnomes/${gnome_id}`, {
+                method: "GET",
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            }).then(response => {
+                if(response.status === 200){
+                    setVisited(true);
+                }
+                else{
+                    setVisited(false);
+                }
+                response.json()
+            }).then(responseData => {
+                
+            }).catch(error => {
+                console.log(error);
+            });
+        }
+        fetchVisitTest();
+    }, []);
+    useEffect(() => {
+        //get visited gnome data
         const gnome_id = localStorage.getItem(GNOME_ID);
         const user_id = localStorage.getItem(USER_ID);
         const fetchVisit = async() => {
@@ -27,9 +75,8 @@ function Gnome(){
                 }
                 return response.json();
             }).then(responseData => {
-                visited = true;
                 setName(responseData.gnome[0].name);
-                const loc =responseData.gnome[0].location.split('|') 
+                const loc = responseData.gnome[0].location.split('|') 
                 setLocation(loc[1]);
                 setDescription(responseData.gnome[0].description);
                 if(responseData.gnome[0].image){
@@ -37,11 +84,10 @@ function Gnome(){
                 }
                 setSuccess(1);
             }).catch(error => {
-                console.log(error);
                 setSuccess(2);
+                console.log(error);
             });
         }
-        fetchVisit();
         //GET gnome data (if not visited)
         const fetchData = async() => {
             await fetch(`/gnomes/${gnome_id}`, {
@@ -53,23 +99,28 @@ function Gnome(){
                 if(!response.ok){
                     throw Error();
                 }
+                return response.json();
             }).then(responseData => {
-                setName(responseData.gnome[0].name);
-                const loc =responseData.gnome[0].location.split('|') 
+                setName(responseData.gnome.name);
+                const loc = responseData.gnome.location.split('|') 
                 setLocation(loc[1]);
-                setDescription(responseData.gnome[0].description);
-                if(responseData.gnome[0].image){
-                    setImage(responseData.gnome[0].image);
+                setDescription(responseData.gnome.description);
+                if(responseData.gnome.image){
+                    setImage(responseData.gnome.image);
                 }
                 setSuccess(1);
             }).catch(error => {
+                console.log(error)
                 setSuccess(2);
             });
         }
-        if(!visited){
+        if(visited){
+            fetchVisit();
+        }
+        else{
             fetchData();
         }
-    }, []);
+    }, [visited]);
     return(
         <div className="Gnome"> 
             <Link to="/map"> Wróć do mapy</Link>
@@ -77,12 +128,16 @@ function Gnome(){
             { success === 1 && 
             <div>
                 <p> {name} </p>
-                <p> <img width={200} height={300} src={"/images/" + image} onError={e => {
+                <p> <img width={320} height={480} src={'./images/' + image} onError={e => {
                     setImage("placeholder.png");
-                    e.currentTarget.src = image;
+                    e.currentTarget.src = './images/' + image;
                     }} alt={"Zdjęcie krasnala"}/> </p>
                 <p>Lokalizacja: {location} </p>
-                <p> Opis: {description} </p>
+                { visited ? <p> Opis: {description} </p>: <p> Opis można przeczytać po odwiedzeniu krasnala. </p>}
+                { visited === false && <button onClick={() => {
+                    visit()
+                    setVisited(true)
+                }}> Odwiedź </button>}
             </div>
             }
         </div>

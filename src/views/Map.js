@@ -1,9 +1,10 @@
 //main view for logged in users, contains a map and a button to the user info page
 import React, {useEffect, useState} from "react";
-import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet"
-import {useNavigate} from "react-router-dom";
+import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
+import {useNavigate, Link} from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import {GNOME_ID} from "../constants.js";
 
 
 function Map() {
@@ -23,7 +24,6 @@ function Map() {
                 }
                 return response.json();
             }).then(responseData => {
-                console.log(responseData.gnomes)
                 setGnomes(responseData.gnomes);
             }).catch(error => {
                 console.log("Fetch failed");
@@ -43,7 +43,10 @@ function Map() {
                     <div key={key}>
                         <Marker position={[data.location.split('|')[0].split(',')[0], data.location.split('|')[0].split(',')[1]]}>
                         <Popup position={[data.location.split('|')[0].split(',')[0], data.location.split('|')[0].split(',')[1]]}>
-                            {data.name}
+                            <Link to="/gnome" onClick={ () => {
+                                 console.log(localStorage.getItem(GNOME_ID));
+                                 localStorage.setItem(GNOME_ID, data.id)
+                            }}> {data.name} </Link>
                         </Popup>
                         </Marker>
                     </div>
