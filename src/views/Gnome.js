@@ -28,9 +28,11 @@ function visit(){
 
 function Gnome(){
     let navigate = useNavigate();
-    if(localStorage.getItem(AUTH_KEY) !== "true"){
-        navigate("/")
-    }
+    useEffect(() => {
+        if(localStorage.getItem(AUTH_KEY) !== "true"){
+            navigate("/")
+        }
+    }, [navigate])
     let[visited, setVisited] = useState(false);
     let[success, setSuccess] = useState(0); // 0 - not loaded, 1 - load successfull, 2 - load failed
     let[name, setName] = useState("");

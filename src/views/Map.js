@@ -8,10 +8,12 @@ import {AUTH_KEY, GNOME_ID} from "../constants.js";
 
 
 function Map() {
-    let navigate = useNavigate();
-    if(localStorage.getItem(AUTH_KEY) !== "true"){
-        navigate("/")
-    }
+    const navigate = useNavigate();
+    useEffect(() => {
+        if(localStorage.getItem(AUTH_KEY) !== "true"){
+            navigate("/")
+        }
+    }, [navigate])
     let[gnomes, setGnomes] = useState([]);
     useEffect(() => {
         const fetchData = async() => {
