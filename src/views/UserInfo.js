@@ -10,6 +10,9 @@ function onSeeMore(id, navigate){
 
 function UserInfo(){
     let navigate = useNavigate();
+    if(localStorage.getItem(AUTH_KEY) !== "true"){
+        navigate("/")
+    }
     const[success, setSuccess] = useState(0); //0 - not loaded, 1 - load successfull, 2 - load failed
     const[username, setUsername] = useState("");
     const[email, setEmail] = useState("");

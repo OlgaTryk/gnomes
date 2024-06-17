@@ -1,8 +1,8 @@
 //shows info about a specific gnome, only shows description if visited by current user
 //only available to logged in users
 import { React, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { GNOME_ID, USER_ID } from "../constants";
+import { Link, useNavigate } from "react-router-dom";
+import { AUTH_KEY, GNOME_ID, USER_ID } from "../constants";
 
 function visit(){
     //get visited gnome data
@@ -27,6 +27,10 @@ function visit(){
 }
 
 function Gnome(){
+    let navigate = useNavigate();
+    if(localStorage.getItem(AUTH_KEY) !== "true"){
+        navigate("/")
+    }
     let[visited, setVisited] = useState(false);
     let[success, setSuccess] = useState(0); // 0 - not loaded, 1 - load successfull, 2 - load failed
     let[name, setName] = useState("");

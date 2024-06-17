@@ -4,11 +4,14 @@ import {MapContainer, TileLayer, Marker, Popup} from "react-leaflet";
 import {useNavigate, Link} from "react-router-dom";
 import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import {GNOME_ID} from "../constants.js";
+import {AUTH_KEY, GNOME_ID} from "../constants.js";
 
 
 function Map() {
     let navigate = useNavigate();
+    if(localStorage.getItem(AUTH_KEY) !== "true"){
+        navigate("/")
+    }
     let[gnomes, setGnomes] = useState([]);
     useEffect(() => {
         const fetchData = async() => {

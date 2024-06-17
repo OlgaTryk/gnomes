@@ -50,6 +50,7 @@ class Login extends Component{
                         }
                     }).catch(error => {
                     this.setState({flag: 1})
+                    console.log(error)
                 });
                }
                fetchData();
