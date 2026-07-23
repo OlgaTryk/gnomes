@@ -7,7 +7,7 @@ Aplikacja webowa inspirowana Pokemon GO o odnajdowaniu krasnali we Wrocławiu. G
 - osiągnięcia
 
 ### Stos technologiczny
-- baza danych: postgres
+- baza danych: SQLite
 - backend: flask
 - frontend: React
 
